@@ -1,0 +1,19 @@
+[
+  {
+    "url": "https://google.com",
+    "interval": "1"
+  },
+
+  {
+    "url": "http://blog.ragingflame.co.za",
+    "interval": "1"
+  },
+  {
+    "url": "http://must-fail-test.com",
+    "interval": "1"
+  },
+  {
+    "url": "http://devapi.optionscan.net",
+    "interval": "2000"
+  }
+]
