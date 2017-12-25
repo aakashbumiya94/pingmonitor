@@ -14,6 +14,6 @@
   },
   {
     "url": "http://devapi.optionscan.net",
-    "interval": "2000"
+    "interval": "1"
   }
 ]
