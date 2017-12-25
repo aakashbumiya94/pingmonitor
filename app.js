@@ -1,39 +1,29 @@
-"use strict"
-
-var Monitor = require('ping-monitor');
-var websites = require('./websites');
-var http = require('http');
-var port = process.env.PORT || 3008;
-var events = require('./events');
-var urls = [];
-var monitors = [];
-
-
-/*
-   Loop over all websites and create a Monitor instance for each one.
-*/
+var Ping = require('./lib/ping'),
+    websites = require('./websites'),
+    http = require('http'),
+    server,
+    port = process.env.PORT || 3008,
+    urls = [],    
+    monitors = [];
+ 
+ 
 websites.forEach(function (website) {
-  
-    var monitor = new Monitor ({
+    var monitor = new Ping ({
         website: website.url,
-        interval: website.interval
+        timeout: website.timeout
     });
-
-    monitor.on('error', events.onError);
-    monitor.on('stop', events.onStop);
-    monitor.on('down', events.onDown);
-
+    
     urls.push(website.url);
     monitors.push(monitor);
 });
-
-
-
-/*
-   Server for responding to http requests
-*/
-http.createServer(function (req, res) {
-    res.end(urls.join('\n'));
-}).listen(port);
-
+ 
+ 
+server = http.createServer(function (req, res) {
+    var data = "Monitoring the following websites: \n \n" + urls.join("\n");
+ 
+    res.end(data);
+});
+ 
+ 
+server.listen(port);
 console.log('Listening to port %s', port);
